@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,13 +18,11 @@ use App\Http\Controllers\Admin\DashboardController;
 |
 */
 
-Route::get('/', function (){
-    return "Hello Minh Hữu!";
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Client Routes
 
-Route::prefix('/categories')->group(function(){
+Route::middleware('auth.admin')->prefix('/categories')->group(function(){
 
     //Danh sách chuyên mục
     Route::get('/', [CategoriesController::class, 'index'])->name('categories.list');
@@ -42,7 +41,21 @@ Route::prefix('/categories')->group(function(){
 
     //Xóa chuyên mục
     Route::delete('/delete/{id}', [CategoriesController::class, 'deleteCategory'])->name('categories.delete');
+
+    //Hiển thị form upload
+    Route::get('upload', [CategoriesController::class, 'getFile']);
+
+    //Upload file
+    Route::post('/upload', [CategoriesController::class, 'handleFile'])->name('categories.upload');
 });
+
+// Route::get('san-pham/{id}', [HomeController::class, 'getProductDetail']);
+
+Route::get('san-pham', [HomeController::class, 'products'])->name('product');
+
+Route::get('them-san-pham', [HomeController::class, 'getAdd']);
+
+Route::post('them-san-pham', [HomeController::class, 'postAdd']);
 
 // Client Admin
 
