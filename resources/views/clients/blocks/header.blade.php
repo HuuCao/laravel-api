@@ -1,5 +1,5 @@
-<header class="py-3 border shadow p-3 mb-5 bg-body rounded">
-    <div class="container-fluid">
+<header class="py-3 border shadow ">
+    <div class="container">
         <div class="row">
             <div class="col-4">
                 <h1>MinhHuu</h1>
